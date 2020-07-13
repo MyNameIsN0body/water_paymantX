@@ -10,10 +10,8 @@ public class DBConnect {
     private static final String USER = "postgres";
     private static final String PASS = "IpMan";
 
-    private Connection connection = null;
-    private Statement statement = null;
-
-    public Connection openConnection() {
+    private Connection openConnection() {
+        Connection connection = null;
         try {
             //login DB
             Class.forName("org.postgresql.Driver");
@@ -29,6 +27,8 @@ public class DBConnect {
     }
 
     public void insertPerson(String sql) {
+        Connection connection = openConnection();
+        Statement statement = null;
         try {
             statement = connection.createStatement();
             System.out.println(sql);
@@ -44,6 +44,8 @@ public class DBConnect {
     }
 
     public void deletePerson(String sql) {
+        Connection connection = openConnection();
+        Statement statement = null;
         try {
             statement = connection.createStatement();
             System.out.println(sql);
@@ -58,6 +60,8 @@ public class DBConnect {
         }
     }
     public void updatePeople(String sql) {
+        Connection connection = openConnection();
+        Statement statement = null;
         try {
             statement = connection.createStatement();
             statement.executeUpdate(sql);
