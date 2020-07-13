@@ -12,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.DBConnect;
-import model.DBConnection;
 import model.People;
 
 import java.net.URL;

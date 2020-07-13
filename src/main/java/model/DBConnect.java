@@ -9,10 +9,9 @@ public class DBConnect {
     private static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/postgres";
     private static final String USER = "postgres";
     private static final String PASS = "IpMan";
+
     private static Connection connection = null;
-
     private Statement statement = null;
-
 
     public static Connection connect() throws SQLException{
         try{
@@ -35,6 +34,7 @@ public class DBConnect {
         connect();
         return connection;
     }
+
     public Connection openConnection(String DBName, String Password) {
         try {
             //login DB

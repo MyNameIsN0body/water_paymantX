@@ -17,7 +17,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.DBConnect;
-import model.DBConnection;
 import model.ModelTable;
 import model.People;
 
@@ -98,7 +97,7 @@ public class TableController implements Initializable {
 
     @FXML
     private void removePersonButtonAction(){
-        People people = new People(new DBConnection().openConnection("postgres", "IpMan"));
+        People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
         people.deletePerson(Integer.parseInt(removePersonTextField.getText()));
         removePersonTextField.clear();
         refreshTable();
@@ -107,7 +106,7 @@ public class TableController implements Initializable {
     }
     @FXML
     private void addPersonButtonAction() {
-        People people = new People(new DBConnection().openConnection("postgres", "IpMan"));
+        People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
         String name = surnameTextField.getText() + " " + nameTextField.getText() + " " + middleNameTextField.getText();
         double balance = Double.parseDouble(balanceTextField.getText());
         people.insertPerson(name,balance);
