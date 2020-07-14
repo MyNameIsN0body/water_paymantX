@@ -1,20 +1,18 @@
 package model;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 public class DBConnect {
     //  Database credentials
     private static final String POSTGRES = "org.postgresql.Driver";
-    private static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/postgres";
-    private static final String USER = "postgres";
-    private static final String PASS = "IpMan";
+    private final String connectionString;
+    private final Properties properties;
 
-    private DBConnect(){}
-
-    public static DBConnect getDBConnect() {
-        return new DBConnect();
+    public DBConnect(String connectionString, Properties properties){
+        this.connectionString = connectionString;
+        this.properties = properties;
     }
 
     private Connection openConnection() {
@@ -22,7 +20,7 @@ public class DBConnect {
         try {
             //login DB
             Class.forName(POSTGRES);
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            connection = DriverManager.getConnection(connectionString, properties);
             connection.setAutoCommit(false);
         } catch (Exception e) {
             e.printStackTrace();
