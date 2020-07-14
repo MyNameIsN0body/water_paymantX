@@ -8,7 +8,6 @@ public class DBConnectFactory {
     private String dbName;
 
     private DBConnect connect = null;
-
     private Properties properties = new Properties();
 
     public String getHostName() {
@@ -53,6 +52,5 @@ public class DBConnectFactory {
         }
         return connect;
     }
-
 
 }
