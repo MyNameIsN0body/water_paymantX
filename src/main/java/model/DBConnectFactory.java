@@ -53,4 +53,15 @@ public class DBConnectFactory {
         return connect;
     }
 
+    /**
+     * Проверят и возвращает валидность DBConnect
+     *
+     * @return true если все верно, false если нет
+     * @throws //TODO
+     */
+    public boolean isValidConnectToDB() {
+        ///TODO реализовать данный метод.
+        return false;
+    }
+
 }
