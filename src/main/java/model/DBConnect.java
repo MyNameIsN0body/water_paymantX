@@ -1,6 +1,7 @@
 package model;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
@@ -15,7 +16,15 @@ public class DBConnect {
         this.properties = properties;
     }
 
-
+    public boolean isConnected(){
+        Connection connection = openConnection();
+        try {
+            return connection.isValid(3000);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
     private Connection openConnection() {
         Connection connection = null;
         try {
