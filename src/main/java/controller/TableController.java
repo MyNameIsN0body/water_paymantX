@@ -25,9 +25,13 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class TableController implements Initializable {
+    private ResourceBundle resourceBundle = ResourceBundle.getBundle("uiLocale",
+            Locale.getDefault());
+
     // TABLE VIEW
     @FXML
     private TableView<ModelTable> allTableView;
@@ -95,6 +99,10 @@ public class TableController implements Initializable {
 //    @FXML
 //    private Button removePersonButton;
 
+    public void init(Stage mainWindows) {
+       //////////////////    ??????????????????????????
+    }
+
     @FXML
     private void removePersonButtonAction(){
         People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
@@ -122,6 +130,9 @@ public class TableController implements Initializable {
 //        initialize(this.location,this.resources);
     }
 
+    public static String getFXMLPath() {
+        return "voda_01.fxml";
+    }
 
     public void openNewStage(ActionEvent actionEvent) throws IOException {
         Stage newStage = new Stage();

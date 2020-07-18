@@ -4,6 +4,9 @@ import javafx.beans.Observable;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 public class ModelTable {
 //    String id;
 //    String fio;
