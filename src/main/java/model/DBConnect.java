@@ -74,7 +74,7 @@ public class DBConnect {
             System.exit(0);
         }
     }
-    public void updatePeople(String sql) {
+    public void updatePerson(String sql) {
         Connection connection = openConnection();
         Statement statement = null;
         try {
