@@ -42,6 +42,10 @@ public class DBConnectFactory {
         properties.setProperty("password", password);
     }
 
+    public boolean isConnect(){
+        return connect.isConnected();
+    }
+
     public DBConnect getConnect() {
         if (connect == null) {
             String urlFromat = "jdbc:postgresql://%s:%d/%s";
