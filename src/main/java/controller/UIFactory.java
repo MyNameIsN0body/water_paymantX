@@ -28,10 +28,14 @@ public class UIFactory {
         primaryStage.setScene(new Scene((Parent)rootForm.getNode()));
         TableController tableController = (TableController) rootForm.getController();
 
+        /*
+         * сюда добавляем загрузку второй формы
+         */
+
+
         primaryStage.show();
         rootForm.getNode().setVisible(true);
-        tableController.init(primaryStage);
-
+        tableController.init(this);
     }
 
     /**
