@@ -35,7 +35,7 @@ public class PaymentController implements Initializable {
     private Button balanceUpdatePeopleButton;
     @FXML
     protected void editPressedAction(ActionEvent event) {
-        People people = new People(new DBConnection().openConnection("postgres", "IpMan"));
+        People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
         people.updatePeople(Integer.parseInt(IDUpdatePeopleTextField.getText()), Double.parseDouble(balanceUpdatePeopleTextField.getText()));
 
         IDUpdatePeopleTextField.clear();
@@ -58,7 +58,7 @@ public class PaymentController implements Initializable {
         Statement statement = null;
 
         try {
-            connection = DBConnect.getConnection();
+            connection = DBConnect.getConnect();
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users_water WHERE balance =(SELECT MIN(balance) FROM users_water);");
 

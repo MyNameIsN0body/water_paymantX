@@ -1,19 +1,10 @@
 package model;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
-/**
- * Класс работы с базой данных.
- *
- * Внесенные изменения:
- * 1. Все методы пробрасывают исключения, так как обработка исключений должна происходить в контроллере,
- * только там мы можем что-то изменить, спросить у пользователя или закрыть приложение
- * 2. Проведен рефрактинг - так, как на самом деле у нас методы insertPerson, deletePerson, updatePeople
- * делают одно и тоже, то мы создали один метод executeUpdate который выполняет SQL запрос.
- * 3. Добавлен метод получения данных executeSelect, с помощью которого мы будем получать информацию
- * из базы данных.
- *
- */
 public class DBConnect {
     //  Database credentials
     private static final String POSTGRES = "org.postgresql.Driver";
@@ -25,72 +16,77 @@ public class DBConnect {
         this.properties = properties;
     }
 
-    /**
-     * Проверка подключения к базе данных
-     *
-     * @return true, если соединение подключено удачно, иначе false
-     * @throws ClassNotFoundException ошибка регистрации драйвера
-     */
-    public boolean isConnected() throws ClassNotFoundException {
+    public boolean isConnected(){
+        Connection connection = openConnection();
         try {
-            Connection connection = openConnection();
             return connection.isValid(3000);
         } catch (SQLException throwables) {
-            //Поясняю, неверно заполненные параметры, это нормально для данного метода (пользователь ошибся)
-            //по этому, это исключение не пробрасывается выше.
+            throwables.printStackTrace();
             return false;
         }
     }
-
-
-    /**
-     * Создание соединения.
-     *
-     * @return Connection с AutoCommit = false
-     * @throws SQLException ошибка подключения
-     * @throws ClassNotFoundException ошибка регистрации драйвера
-     */
-    private Connection openConnection() throws SQLException, ClassNotFoundException {
+    private Connection openConnection() {
         Connection connection = null;
-        Class.forName(POSTGRES);
-        connection = DriverManager.getConnection(connectionString, properties);
-        connection.setAutoCommit(false);
+        try {
+            //login DB
+            Class.forName(POSTGRES);
+            connection = DriverManager.getConnection(connectionString, properties);
+            connection.setAutoCommit(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
         return connection;
     }
 
-    /**
-     * Обработчик любых запросов Insert, Delete, Update
-     *
-     * @param sql sql запрос
-     * @throws Exception on error
-     */
-    public void executeUpdate(String sql) throws Exception {
+    public void insertPerson(String sql) {
         Connection connection = openConnection();
-        Statement statement= connection.createStatement();
-        statement.executeUpdate(sql);
-        connection.commit();
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            System.out.println(sql);
+            statement.executeUpdate(sql);
+            statement.close();
+            connection.commit();
+            connection.close();
 
-        statement.close();
-        connection.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
     }
 
-    /**
-     * Обработчик запросов Select
-     *
-     * @param sql  sql запрос
-     * @return ResultSet
-     * @throws Exception on error
-     */
-    public ResultSet executeSelect(String sql) throws Exception {
+    public void deletePerson(String sql) {
         Connection connection = openConnection();
-        Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery(sql);
-        connection.commit();
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            System.out.println(sql);
+            statement.executeUpdate(sql);
+            connection.commit();
+            statement.close();
+            connection.close();
 
-        statement.close();
-        connection.close();
-        return result;
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
     }
+    public void updatePerson(String sql) {
+        Connection connection = openConnection();
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+            connection.commit();
 
-
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
 }
