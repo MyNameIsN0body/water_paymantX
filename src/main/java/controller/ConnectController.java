@@ -16,6 +16,9 @@ public class ConnectController {
     private TextField portTextField;
 
     @FXML
+    private TextField dbNameTextField;
+
+    @FXML
     private TextField userNameTextField;
 
     @FXML
@@ -33,7 +36,9 @@ public class ConnectController {
         return "voda_00.fxml";
     }
 
-
+    private boolean isNumeric(String str){
+        return str.matches("-?\\d+(\\.\\d+)?");
+    }
 
     /**
      * неправильно смешивать названия функций, функция init - инициализирует форм,
@@ -46,8 +51,13 @@ public class ConnectController {
         *  так как функция parseInt бросает NumberFormatException и если пользолватель ввел не цифры, то
         * у тебя из-за маленькой ошибки сломалась вся программа
         */
-        dbConnectFactory.setPort(Integer.parseInt(portTextField.getText()));
-        //////// нужно dbName ? - да, нужно. Имя базы обязательно
+        String port = portTextField.getText();
+        if(isNumeric(port)) {
+            dbConnectFactory.setPort(Integer.parseInt(port));
+        } else {
+            portTextField.setText("");
+        }
+        dbConnectFactory.setDbName(dbNameTextField.getText());
         dbConnectFactory.setUserName(userNameTextField.getText());
         dbConnectFactory.setPassword(passwordTextField.getText());
         DBConnect connect = DBConnectFactory.getConnect();

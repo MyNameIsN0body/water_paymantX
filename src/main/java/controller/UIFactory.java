@@ -16,9 +16,14 @@ public class UIFactory {
     private final ResourceBundle resourceBundle;
     Stage primaryStage;
 
+    List<FXMLForm> formList = new ArrayList<>();
+
     public UIFactory(ResourceBundle resourceBundle, Stage primaryStage) {
         this.resourceBundle = resourceBundle;
         this.primaryStage = primaryStage;
+    }
+    public List<FXMLForm> getFormList() {
+        return formList;
     }
 
     public void initUI() throws Exception {
@@ -31,7 +36,11 @@ public class UIFactory {
         /*
          * сюда добавляем загрузку второй формы
          */
+        FXMLForm paymentForm = loadNode(PaymentController.getFXMLPath(),resourceBundle);
+        //PaymentController paymentController = (PaymentController) paymentForm.getController();
 
+        formList.add(rootForm);
+        formList.add(paymentForm);
 
         primaryStage.show();
         rootForm.getNode().setVisible(true);

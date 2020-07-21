@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
-public class PaymentController implements Initializable {
+public class PaymentController {
 
     @FXML
     private TextField IDUpdatePeopleTextField;
@@ -51,8 +51,12 @@ public class PaymentController implements Initializable {
 
     private ObservableList<String> items = FXCollections.observableArrayList();
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public static String getFXMLPath() {
+        return "voda_02.fxml";
+    }
+
+
+    public void init(URL location, ResourceBundle resources) {
         payment_list.setItems(items);
         Connection connection = null;
         Statement statement = null;
