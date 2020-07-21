@@ -53,7 +53,7 @@ public class TableController {
 
     public void init(URL location, ResourceBundle resources) {
         try {
-            Connection connection = DBConnect.getConnection();
+            Connection connection = DBConnect.openConnection();
             ResultSet resultSet = connection.createStatement().executeQuery("select * from users_water");
             while(resultSet.next()) {
                 observableList.add(new ModelTable(resultSet.getInt("user_id"),resultSet.getString("fio"),resultSet.getDouble("balance")));
