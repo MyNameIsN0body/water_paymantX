@@ -2,7 +2,13 @@ package model;
 
 import java.util.Properties;
 
+/**
+ * Меняем класс фабрики на статический, чтобы можно было с одним экземпляром из любого места программы
+ */
 public class DBConnectFactory {
+
+    private static final DBConnectFactory connectFactory = new DBConnectFactory();
+
     private String hostName;
     private Integer port;
     private String dbName;
@@ -10,47 +16,62 @@ public class DBConnectFactory {
     private DBConnect connect = null;
     private Properties properties = new Properties();
 
-    public String getHostName() {
-        return hostName;
+    /**
+     * запрет создавать экземпляры
+     */
+    private DBConnectFactory() {
+
     }
 
-    public void setHostName(String hostName) {
-        this.hostName = hostName;
+    public static String getHostName() {
+        return connectFactory.hostName;
     }
 
-    public Integer getPort() {
-        return port;
+    public static void setHostName(String hostName) {
+        connectFactory.hostName = hostName;
     }
 
-    public void setPort(Integer port) {
-        this.port = port;
+    public static Integer getPort() {
+        return connectFactory.port;
     }
 
-    public String getDbName() {
-        return dbName;
+    public static void setPort(Integer port) {
+        connectFactory.port = port;
     }
 
-    public void setDbName(String dbName) {
-        this.dbName = dbName;
+    public static String getDbName() {
+        return connectFactory.dbName;
     }
 
-    public void setUserName(String userName) {
-        properties.setProperty("user", userName);
+    public static void setDbName(String dbName) {
+        connectFactory.dbName = dbName;
+    }
+
+    public static void setUserName(String userName) {
+        connectFactory.properties.setProperty("user", userName);
     }
 
     public void setPassword(String password) {
-        properties.setProperty("password", password);
+        connectFactory.properties.setProperty("password", password);
     }
 
-    public DBConnect getConnect() {
-        if (connect == null) {
+    /**
+     * Получаем DBConnect
+     * @return DBConnect или null если соединение прошло неудачно
+     */
+    public static DBConnect getConnect(){
+        if (connectFactory.connect == null) {
             String urlFromat = "jdbc:postgresql://%s:%d/%s";
-            String connectionString = String.format(urlFromat,hostName,port,dbName);
-            DBConnect connect = new DBConnect(connectionString,properties);
-            this.connect = connect;
+            String connectionString = String.format(urlFromat,getHostName(),getPort(),getDbName());
+            DBConnect connect = new DBConnect(connectionString,connectFactory.properties);
+            if (!connect.isConnected()) return null;
+            connectFactory.connect = connect;
             return connect;
         }
-        return connect;
+        return connectFactory.connect;
     }
 
+    public static DBConnectFactory getFactory() {
+        return connectFactory;
+    }
 }

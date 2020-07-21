@@ -50,8 +50,9 @@ public class TableController {
         }
     });
 
+/* пока комментируем, чтобы не менять
+    public void init() {
 
-    public void init(URL location, ResourceBundle resources) {
         try {
             Connection connection = DBConnect.openConnection();
             ResultSet resultSet = connection.createStatement().executeQuery("select * from users_water");
@@ -62,12 +63,15 @@ public class TableController {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+
 // relativePath.setCellValueFactory(x->x.getValue().relativePathProperty()
         IDtableColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         FIOtableColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
         BalancetableColumn.setCellValueFactory(new PropertyValueFactory<>("balance"));
         allTableView.setItems(observableList);
     }
+    */
     //  View Controller
 
     @FXML
@@ -94,10 +98,18 @@ public class TableController {
     @FXML
     private TextField removePersonTextField;
 
+    private UIFactory factory;
+
 //    @FXML
 //    private Button removePersonButton;
 
-    public void init(FXMLForm form) {
+    /*
+    *  передаем контроллер, он нам понадобится. Пока комментируем весь код, которы связан см б/д, чтобы не менять
+    *  дальше не стал комментировать, хотя надо.
+    */
+    public void init(UIFactory factory) {
+        this.factory = factory;
+        /*
         try {
             Connection connection = DBConnect.getConnection();
             ResultSet resultSet = connection.createStatement().executeQuery("select * from users_water");
@@ -108,6 +120,7 @@ public class TableController {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        */
 // relativePath.setCellValueFactory(x->x.getValue().relativePathProperty()
         IDtableColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         FIOtableColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
