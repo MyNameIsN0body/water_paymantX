@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -28,9 +27,8 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class TableController implements Initializable {
-    private ResourceBundle resourceBundle = ResourceBundle.getBundle("uiLocale",
-            Locale.getDefault());
+public class TableController {
+
 
     // TABLE VIEW
     @FXML
@@ -52,8 +50,8 @@ public class TableController implements Initializable {
         }
     });
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+
+    public void init(URL location, ResourceBundle resources) {
         try {
             Connection connection = DBConnect.getConnection();
             ResultSet resultSet = connection.createStatement().executeQuery("select * from users_water");
@@ -99,14 +97,28 @@ public class TableController implements Initializable {
 //    @FXML
 //    private Button removePersonButton;
 
-    public void init(Stage mainWindows) {
-       //////////////////    ??????????????????????????
+    public void init(FXMLForm form) {
+        try {
+            Connection connection = DBConnect.getConnection();
+            ResultSet resultSet = connection.createStatement().executeQuery("select * from users_water");
+            while(resultSet.next()) {
+                observableList.add(new ModelTable(resultSet.getInt("user_id"),resultSet.getString("fio"),resultSet.getDouble("balance")));
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+// relativePath.setCellValueFactory(x->x.getValue().relativePathProperty()
+        IDtableColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        FIOtableColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
+        BalancetableColumn.setCellValueFactory(new PropertyValueFactory<>("balance"));
+        allTableView.setItems(observableList);
     }
 
     @FXML
     private void removePersonButtonAction(){
         People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
-        people.deletePerson(Integer.parseInt(removePersonTextField.getText()));
+        people.deletePeople(Integer.parseInt(removePersonTextField.getText()));
         removePersonTextField.clear();
         refreshTable();
 //        allTableView.getItems().clear();
@@ -117,7 +129,7 @@ public class TableController implements Initializable {
         People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
         String name = surnameTextField.getText() + " " + nameTextField.getText() + " " + middleNameTextField.getText();
         double balance = Double.parseDouble(balanceTextField.getText());
-        people.insertPerson(name,balance);
+        people.insertPeople(name,balance);
 
         surnameTextField.clear();
         nameTextField.clear();

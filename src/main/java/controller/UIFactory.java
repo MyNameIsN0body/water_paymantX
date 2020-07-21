@@ -30,7 +30,7 @@ public class UIFactory {
 
         primaryStage.show();
         rootForm.getNode().setVisible(true);
-        tableController.init(primaryStage);
+        tableController.init(rootForm.getNode());
 
     }
 
