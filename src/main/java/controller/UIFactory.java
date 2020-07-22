@@ -24,20 +24,27 @@ public class UIFactory {
         this.primaryStage = primaryStage;
     }
 
-    public Node getForm(String nameForm) {
+    private FXMLForm searchFXMLForm(String nameForm) {
         for (FXMLForm form : formList) {
             if (form.getNameForm().equals(nameForm)) {
-                return form.getNode();
+                return form;
             }
         }
         return null;
     }
 
+    public Node getForm(String nameForm) {
+        FXMLForm fxmlForm = searchFXMLForm(nameForm);
+        if (fxmlForm != null) {
+            return fxmlForm.getNode();
+        }
+        return null;
+    }
+
     public Object getController(String nameForm) {
-        for (FXMLForm form : formList) {
-            if (form.getNameForm().equals(nameForm)) {
-                return form.getController();
-            }
+        FXMLForm fxmlForm = searchFXMLForm(nameForm);
+        if (fxmlForm != null) {
+            return fxmlForm.getController();
         }
         return null;
     }
