@@ -16,6 +16,9 @@ import java.util.stream.Collectors;
 public class UIFactory {
     private final ResourceBundle resourceBundle;
     Stage primaryStage;
+    protected static final String PROPERTIES_FORM = "propertiesForm";
+    protected static final String MAIN_FORM = "mainForm";
+    protected static final String PAYMENT_FORM = "paymentForm";
 
     private Set<FXMLForm> formList = new HashSet<>();
 
@@ -52,17 +55,16 @@ public class UIFactory {
     public void initUI() throws Exception {
 
         //UIMain loading
-        FXMLForm rootForm = loadNode(TableController.getFXMLPath(), resourceBundle, "mainForm");
+        FXMLForm rootForm = loadNode(TableController.getFXMLPath(), resourceBundle, MAIN_FORM);
         primaryStage.setScene(new Scene((Parent) rootForm.getNode()));
         TableController tableController = (TableController) rootForm.getController();
 
         /*
          * сюда добавляем загрузку второй формы
          */
-        FXMLForm paymentForm = loadNode(PaymentController.getFXMLPath(), resourceBundle, "paymentForm");
-        //PaymentController paymentController = (PaymentController) paymentForm.getController();
+        FXMLForm paymentForm = loadNode(PaymentController.getFXMLPath(), resourceBundle, PAYMENT_FORM);
 
-        FXMLForm propertiesForm = loadNode(ConnectController.getFXMLPath(), resourceBundle, "propertiesForm");
+        FXMLForm propertiesForm = loadNode(ConnectController.getFXMLPath(), resourceBundle, PROPERTIES_FORM);
 
         primaryStage.show();
         propertiesForm.getNode().setVisible(true);

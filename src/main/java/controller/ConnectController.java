@@ -35,11 +35,12 @@ public class ConnectController {
     public static String getFXMLPath() {
         return "voda_00.fxml";
     }
+
     /*
-    *Регулярное выражение проверяет корректность ввода поля port,
-    *  если в строке только цифровое то вернёт true
-    */
-    private boolean isNumeric(String str){
+     *Регулярное выражение проверяет корректность ввода поля port,
+     *  если в строке только цифы то вернёт true
+     */
+    private boolean isNumeric(String str) {
         return str.matches("-?\\d+(\\.\\d+)?");
     }
 
@@ -47,15 +48,12 @@ public class ConnectController {
      * неправильно смешивать названия функций, функция init - инициализирует форм,
      * эта функция инициализирует коннект,
      */
-    public boolean connectDB(){
+    public boolean connectDB() {
         DBConnectFactory dbConnectFactory = DBConnectFactory.getFactory();
         dbConnectFactory.setHostName(hostTextField.getText());
-        /* вот так на самом деле неправльно - Integer.parseInt(portTextField.getText()),
-        *  так как функция parseInt бросает NumberFormatException и если пользолватель ввел не цифры, то
-        * у тебя из-за маленькой ошибки сломалась вся программа
-        */
+
         String port = portTextField.getText();
-        if(isNumeric(port)) {
+        if (isNumeric(port)) {
             dbConnectFactory.setPort(Integer.parseInt(port));
         } else {
             portTextField.setText("");
@@ -69,17 +67,19 @@ public class ConnectController {
 
     /**
      * И да, нам все еще нужна ссылка на фабрику форм, как без нее мы будем открывать новую форму
+     *
      * @param factory
      */
     public void init(UIFactory factory) {
-        this.factory =factory;
+        this.factory = factory;
     }
 
     @FXML
     private void tryСonnectButtonAction() {
         if (connectDB()) {
             ///Тут добавим переход на новую форму
-            factory.getForm("mainForm");
+            factory.getForm(UIFactory.PROPERTIES_FORM).setVisible(false);
+            factory.getForm(UIFactory.MAIN_FORM).setVisible(true);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ошибка подключения к базе данных");
