@@ -22,12 +22,12 @@ public class UIFactory {
         this.resourceBundle = resourceBundle;
         this.primaryStage = primaryStage;
     }
-    public FXMLForm getForm(String nameForm) {
+    public Node getForm(String nameForm) {
         Iterator it = formList.iterator();
         while (it.hasNext()){
            FXMLForm currentForm = (FXMLForm) it.next();
            if(currentForm.getNameForm().equals(nameForm)){
-               return currentForm;
+               return currentForm.getNode();
            }
         }
         return null;
