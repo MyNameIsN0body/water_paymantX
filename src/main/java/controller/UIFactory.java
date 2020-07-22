@@ -64,12 +64,8 @@ public class UIFactory {
 
         FXMLForm propertiesForm = loadNode(ConnectController.getFXMLPath(), resourceBundle, "propertiesForm");
 
-        formList.add(rootForm);
-        formList.add(paymentForm);
-        formList.add(propertiesForm);
-
         primaryStage.show();
-        rootForm.getNode().setVisible(true);
+        propertiesForm.getNode().setVisible(true);
         tableController.init(this);
     }
 
@@ -86,7 +82,9 @@ public class UIFactory {
         FXMLLoader loader = new FXMLLoader(xmlUrl, resourceBundle);
         Parent root = loader.load();
         root.setVisible(false);
-        return new FXMLForm(root, loader.getController(), nameForm);
+        FXMLForm form = new FXMLForm(root, loader.getController(), nameForm);
+        formList.add(form);
+        return form;
     }
 
 
