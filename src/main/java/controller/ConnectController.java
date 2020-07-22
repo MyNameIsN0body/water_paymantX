@@ -35,7 +35,10 @@ public class ConnectController {
     public static String getFXMLPath() {
         return "voda_00.fxml";
     }
-
+    /*
+    *Регулярное выражение проверяет корректность ввода поля port,
+    *  если в строке только цифровое то вернёт true
+    */
     private boolean isNumeric(String str){
         return str.matches("-?\\d+(\\.\\d+)?");
     }
@@ -76,6 +79,7 @@ public class ConnectController {
     private void tryСonnectButtonAction() {
         if (connectDB()) {
             ///Тут добавим переход на новую форму
+            factory.getForm("mainForm");
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ошибка подключения к базе данных");
