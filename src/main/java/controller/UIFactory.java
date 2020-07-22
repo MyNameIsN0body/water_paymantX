@@ -1,4 +1,5 @@
 package controller;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -22,23 +23,20 @@ public class UIFactory {
         this.resourceBundle = resourceBundle;
         this.primaryStage = primaryStage;
     }
+
     public Node getForm(String nameForm) {
-        Iterator it = formList.iterator();
-        while (it.hasNext()){
-           FXMLForm currentForm = (FXMLForm) it.next();
-           if(currentForm.getNameForm().equals(nameForm)){
-               return currentForm.getNode();
-           }
+        for (FXMLForm form : formList) {
+            if (form.getNameForm().equals(nameForm)) {
+                return form.getNode();
+            }
         }
         return null;
     }
 
     public Object getController(String nameForm) {
-        Iterator it = formList.iterator();
-        while (it.hasNext()){
-            FXMLForm currentForm = (FXMLForm)it.next();
-            if(currentForm.getNameForm().equals(nameForm)){
-                return currentForm.getController();
+        for (FXMLForm form : formList) {
+            if (form.getNameForm().equals(nameForm)) {
+                return form.getController();
             }
         }
         return null;
@@ -47,17 +45,17 @@ public class UIFactory {
     public void initUI() throws Exception {
 
         //UIMain loading
-        FXMLForm rootForm = loadNode(TableController.getFXMLPath(),resourceBundle,"mainForm");
-        primaryStage.setScene(new Scene((Parent)rootForm.getNode()));
+        FXMLForm rootForm = loadNode(TableController.getFXMLPath(), resourceBundle, "mainForm");
+        primaryStage.setScene(new Scene((Parent) rootForm.getNode()));
         TableController tableController = (TableController) rootForm.getController();
 
         /*
          * сюда добавляем загрузку второй формы
          */
-        FXMLForm paymentForm = loadNode(PaymentController.getFXMLPath(),resourceBundle, "paymentForm");
+        FXMLForm paymentForm = loadNode(PaymentController.getFXMLPath(), resourceBundle, "paymentForm");
         //PaymentController paymentController = (PaymentController) paymentForm.getController();
 
-        FXMLForm propertiesForm = loadNode(ConnectController.getFXMLPath(),resourceBundle,"propertiesForm");
+        FXMLForm propertiesForm = loadNode(ConnectController.getFXMLPath(), resourceBundle, "propertiesForm");
 
         formList.add(rootForm);
         formList.add(paymentForm);
@@ -71,17 +69,17 @@ public class UIFactory {
     /**
      * Загружает любую FXML формы
      *
-     * @param resourcePath путь к форме
+     * @param resourcePath   путь к форме
      * @param resourceBundle ResourceBundle с локализацией формы
      * @return FXMLForm
      * @throws IOException
      */
-    private FXMLForm loadNode(String resourcePath, ResourceBundle resourceBundle,String nameForm) throws IOException {
+    private FXMLForm loadNode(String resourcePath, ResourceBundle resourceBundle, String nameForm) throws IOException {
         URL xmlUrl = TableController.class.getResource(resourcePath);
-        FXMLLoader loader = new FXMLLoader(xmlUrl,resourceBundle);
+        FXMLLoader loader = new FXMLLoader(xmlUrl, resourceBundle);
         Parent root = loader.load();
         root.setVisible(false);
-        return new FXMLForm(root,loader.getController(),nameForm);
+        return new FXMLForm(root, loader.getController(), nameForm);
     }
 
 
@@ -90,7 +88,7 @@ public class UIFactory {
         private final Object controller;
         private final String nameForm;
 
-        public FXMLForm(final Node node,final Object controller, String nameForm) {
+        public FXMLForm(final Node node, final Object controller, String nameForm) {
             this.node = node;
             this.controller = controller;
             this.nameForm = nameForm;
@@ -99,9 +97,11 @@ public class UIFactory {
         public Node getNode() {
             return node;
         }
-        public String getNameForm(){
+
+        public String getNameForm() {
             return nameForm;
         }
+
         public Object getController() {
             return controller;
         }
