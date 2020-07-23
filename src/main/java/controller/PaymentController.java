@@ -54,7 +54,7 @@ public class PaymentController {
     private ObservableList<String> items = FXCollections.observableArrayList();
 
     public static String getFXMLPath() {
-        return "/voda_02.fxml";
+        return "voda_02.fxml";
     }
 
 
