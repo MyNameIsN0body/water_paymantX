@@ -130,19 +130,19 @@ public class TableController {
 
     @FXML
     private void removePersonButtonAction(){
-        People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
-        people.deletePeople(Integer.parseInt(removePersonTextField.getText()));
+//        People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
+//        people.deletePeople(Integer.parseInt(removePersonTextField.getText()));
         removePersonTextField.clear();
-        refreshTable();
+//        refreshTable();
 //        allTableView.getItems().clear();
 //        initialize(this.location,this.resources);
     }
     @FXML
     private void addPersonButtonAction() {
-        People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
+//        People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
         String name = surnameTextField.getText() + " " + nameTextField.getText() + " " + middleNameTextField.getText();
         double balance = Double.parseDouble(balanceTextField.getText());
-        people.insertPeople(name,balance);
+//        people.insertPeople(name,balance);
 
         surnameTextField.clear();
         nameTextField.clear();
@@ -150,7 +150,7 @@ public class TableController {
         balanceTextField.clear();
 
 
-        refreshTable();
+//        refreshTable();
 //        allTableView.getItems().clear();
 //        initialize(this.location,this.resources);
     }
@@ -174,10 +174,10 @@ public class TableController {
     }
 
 
-
-    public void refreshTable() {
-        allTableView.getItems().clear();
-        initialize(this.location,this.resources);
-    }
+//
+//    public void refreshTable() {
+//        allTableView.getItems().clear();
+//        initialize(this.location,this.resources);
+//    }
 
 }
