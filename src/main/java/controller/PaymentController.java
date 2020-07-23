@@ -26,13 +26,18 @@ public class PaymentController {
     @FXML
     private TextField IDUpdatePeopleTextField;
 
-
-
     @FXML
     private TextField balanceUpdatePeopleTextField;
 
     @FXML
     private Button balanceUpdatePeopleButton;
+
+    @FXML
+    private ListView<String> payment_list;
+
+    private UIFactory factory;
+
+
     @FXML
     protected void editPressedAction(ActionEvent event) {
         People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
@@ -43,11 +48,8 @@ public class PaymentController {
         Stage stage = (Stage) balanceUpdatePeopleButton.getScene().getWindow();
         stage.close();
 
-
     }
 
-    @FXML
-    private ListView<String> payment_list;
 
     private ObservableList<String> items = FXCollections.observableArrayList();
 
@@ -56,7 +58,8 @@ public class PaymentController {
     }
 
 
-    public void init(URL location, ResourceBundle resources) {
+    public void init(UIFactory factory) {
+
         payment_list.setItems(items);
         Connection connection = null;
         Statement statement = null;
