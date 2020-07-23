@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class UIFactory {
     private final ResourceBundle resourceBundle;
-    Stage primaryStage;
+    protected Stage primaryStage;
     protected static final String PROPERTIES_FORM = "propertiesForm";
     protected static final String MAIN_FORM = "mainForm";
     protected static final String PAYMENT_FORM = "paymentForm";

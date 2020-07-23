@@ -156,7 +156,7 @@ public class TableController {
     }
 
     public static String getFXMLPath() {
-        return "voda_01.fxml";
+        return "/voda_01.fxml";
     }
 
     public void openNewStage(ActionEvent actionEvent) throws IOException {

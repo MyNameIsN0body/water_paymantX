@@ -33,7 +33,7 @@ public class ConnectController {
     private UIFactory factory;
 
     public static String getFXMLPath() {
-        return "voda_00.fxml";
+        return "/voda_00.fxml";
     }
 
     /*
