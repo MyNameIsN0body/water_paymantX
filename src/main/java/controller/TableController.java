@@ -19,6 +19,7 @@ import model.DBConnect;
 import model.ModelTable;
 import model.People;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -156,7 +157,7 @@ public class TableController {
     }
 
     public static String getFXMLPath() {
-        return "voda_01.fxml";
+        return "../voda_01.fxml";
     }
 
     public void openNewStage(ActionEvent actionEvent) throws IOException {

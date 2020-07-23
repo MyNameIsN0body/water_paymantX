@@ -8,6 +8,8 @@ import javafx.scene.control.TextField;
 import model.DBConnect;
 import model.DBConnectFactory;
 
+import java.io.File;
+
 public class ConnectController {
     @FXML
     private TextField hostTextField;
@@ -33,7 +35,7 @@ public class ConnectController {
     private UIFactory factory;
 
     public static String getFXMLPath() {
-        return "voda_00.fxml";
+        return "../voda_00.fxml";
     }
 
     /*

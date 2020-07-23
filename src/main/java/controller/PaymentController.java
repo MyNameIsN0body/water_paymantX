@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import model.DBConnect;
 import model.People;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -38,8 +39,8 @@ public class PaymentController {
     private UIFactory factory;
 
 
-//    @FXML
-//    protected void editPressedAction(ActionEvent event) {
+    @FXML
+    protected void editPressedAction(ActionEvent event) {
 //        People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
 //        people.updatePeople(Integer.parseInt(IDUpdatePeopleTextField.getText()), Double.parseDouble(balanceUpdatePeopleTextField.getText()));
 //
@@ -48,13 +49,13 @@ public class PaymentController {
 //        Stage stage = (Stage) balanceUpdatePeopleButton.getScene().getWindow();
 //        stage.close();
 //
-//    }
+    }
 
 
     private ObservableList<String> items = FXCollections.observableArrayList();
 
     public static String getFXMLPath() {
-        return "voda_02.fxml";
+        return "../voda_02.fxml";
     }
 
 
