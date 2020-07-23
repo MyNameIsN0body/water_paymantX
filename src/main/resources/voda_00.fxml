@@ -21,7 +21,7 @@
         </Label>
         <TextField fx:id="hostTextField" layoutX="186.0" layoutY="25.0" prefHeight="25.0" prefWidth="151.0" promptText="host" />
         <TextField fx:id="portTextField" layoutX="186.0" layoutY="67.0" prefHeight="25.0" prefWidth="151.0" promptText="port" />
-        <Button fx:id="cancelСonnectionButton" layoutX="268.0" layoutY="256.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Отмена" />
+        <Button fx:id="cancelСonnectButtonAction" layoutX="268.0" layoutY="256.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Отмена" />
         <Button fx:id="tryСonnectButtonAction" layoutX="187.0" layoutY="256.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="ОК" />
         <Label layoutX="20.0" layoutY="156.0" text="Имя пользователя:">
             <font>

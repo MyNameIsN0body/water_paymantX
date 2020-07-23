@@ -25,7 +25,7 @@ public class ConnectController {
     private PasswordField passwordTextField;
 
     @FXML
-    private Button cancelСonnectionButton;
+    private Button cancelСonnectButtonAction;
 
     @FXML
     private Button tryСonnectButtonAction;
@@ -74,17 +74,30 @@ public class ConnectController {
         this.factory = factory;
     }
 
+    private void goToMainForm() {
+        factory.getForm(UIFactory.PROPERTIES_FORM).setVisible(false);
+        factory.getForm(UIFactory.MAIN_FORM).setVisible(true);
+    }
+
     @FXML
     private void tryСonnectButtonAction() {
         if (connectDB()) {
             ///Тут добавим переход на новую форму
-            factory.getForm(UIFactory.PROPERTIES_FORM).setVisible(false);
-            factory.getForm(UIFactory.MAIN_FORM).setVisible(true);
+            goToMainForm();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ошибка подключения к базе данных");
             alert.setHeaderText("Неверные параметры подключения");
         }
 
+    }
+
+    @FXML
+    private void cancelСonnectButtonAction() {
+        if (connectDB()) {
+            goToMainForm();
+        } else {
+            factory.primaryStage.close();
+        }
     }
 }
