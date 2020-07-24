@@ -17,34 +17,27 @@ public class DBConnect {
     }
 
     public boolean isConnected(){
-        Connection connection = openConnection();
         try {
+            Connection connection = openConnection();
             return connection.isValid(3000);
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
             return false;
         }
     }
-    private Connection openConnection() {
+    private Connection openConnection() throws ClassNotFoundException, SQLException {
         Connection connection = null;
-        try {
             //login DB
             Class.forName(POSTGRES);
             connection = DriverManager.getConnection(connectionString, properties);
             connection.setAutoCommit(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-
         return connection;
     }
 
     public void insertPerson(String sql) {
-        Connection connection = openConnection();
         Statement statement = null;
         try {
+            Connection connection = openConnection();
             statement = connection.createStatement();
             System.out.println(sql);
             statement.executeUpdate(sql);
@@ -59,9 +52,9 @@ public class DBConnect {
     }
 
     public void deletePerson(String sql) {
-        Connection connection = openConnection();
         Statement statement = null;
         try {
+            Connection connection = openConnection();
             statement = connection.createStatement();
             System.out.println(sql);
             statement.executeUpdate(sql);
@@ -75,9 +68,9 @@ public class DBConnect {
         }
     }
     public void updatePerson(String sql) {
-        Connection connection = openConnection();
         Statement statement = null;
         try {
+            Connection connection = openConnection();
             statement = connection.createStatement();
             statement.executeUpdate(sql);
             connection.commit();
