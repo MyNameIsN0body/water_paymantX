@@ -6,10 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.ModelTable;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
+
 public class UIFactory {
     private final ResourceBundle resourceBundle;
     protected Stage primaryStage;
@@ -17,10 +19,12 @@ public class UIFactory {
     protected static final String MAIN_FORM = "mainForm";
     protected static final String PAYMENT_FORM = "paymentForm";
     private Set<FXMLForm> formList = new HashSet<>();
+
     public UIFactory(ResourceBundle resourceBundle, Stage primaryStage) {
         this.resourceBundle = resourceBundle;
         this.primaryStage = primaryStage;
     }
+
     private FXMLForm searchFXMLForm(String nameForm) {
         for (FXMLForm form : formList) {
             if (form.getNameForm().equals(nameForm)) {
@@ -29,6 +33,7 @@ public class UIFactory {
         }
         return null;
     }
+
     public Node getForm(String nameForm) {
         FXMLForm fxmlForm = searchFXMLForm(nameForm);
         if (fxmlForm != null) {
@@ -36,6 +41,7 @@ public class UIFactory {
         }
         return null;
     }
+
     public Object getController(String nameForm) {
         FXMLForm fxmlForm = searchFXMLForm(nameForm);
         if (fxmlForm != null) {
@@ -43,6 +49,7 @@ public class UIFactory {
         }
         return null;
     }
+
     public void initUI() throws Exception {
         //UIMain loading
         FXMLForm rootForm = loadNode(TableController.getFXMLPath(), resourceBundle, MAIN_FORM);
@@ -58,6 +65,7 @@ public class UIFactory {
         primaryStage.show();
         tableController.init(this);
     }
+
     /**
      * Загружает любую FXML формы
      *
@@ -72,24 +80,34 @@ public class UIFactory {
         Parent root = loader.load();
         root.setVisible(false);
         FXMLForm form = new FXMLForm(root, loader.getController(), nameForm);
+
+        if (form.getController() instanceof IController) {
+            ((IController) form.getController()).init(this);
+        }
+
         formList.add(form);
         return form;
     }
+
     private class FXMLForm {
         private final Node node;
         private final Object controller;
         private final String nameForm;
+
         public FXMLForm(final Node node, final Object controller, String nameForm) {
             this.node = node;
             this.controller = controller;
             this.nameForm = nameForm;
         }
+
         public Node getNode() {
             return node;
         }
+
         public String getNameForm() {
             return nameForm;
         }
+
         public Object getController() {
             return controller;
         }

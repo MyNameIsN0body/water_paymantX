@@ -21,7 +21,7 @@ public class DBConnect {
             Connection connection = openConnection();
             return connection.isValid(3000);
         } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
+//            throwables.printStackTrace();
             return false;
         }
     }

@@ -10,7 +10,7 @@ import model.DBConnectFactory;
 
 import java.io.File;
 
-public class ConnectController {
+public class ConnectController implements IController{
     @FXML
     private TextField hostTextField;
 
@@ -89,7 +89,8 @@ public class ConnectController {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ошибка подключения к базе данных");
-            alert.setHeaderText("Неверные параметры подключения");
+            alert.setContentText("Неверные параметры подключения");
+            alert.show();
         }
 
     }

@@ -28,7 +28,7 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class TableController {
+public class TableController implements IController{
 
 
     // TABLE VIEW

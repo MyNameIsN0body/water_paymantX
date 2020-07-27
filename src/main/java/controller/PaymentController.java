@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
-public class PaymentController {
+public class PaymentController implements IController{
 
     @FXML
     private TextField IDUpdatePeopleTextField;
@@ -38,7 +38,9 @@ public class PaymentController {
 
     private UIFactory factory;
 
-
+    public void init(UIFactory factory) {
+        this.factory = factory;
+    }
     @FXML
     protected void editPressedAction(ActionEvent event) {
 //        People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
