@@ -15,17 +15,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import model.DBConnect;
-import model.ModelTable;
-import model.People;
+import model.TableItem;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class TableController implements IController{
@@ -33,21 +26,21 @@ public class TableController implements IController{
 
     // TABLE VIEW
     @FXML
-    private TableView<ModelTable> allTableView;
+    private TableView<TableItem> allTableView;
 
     @FXML
-    private TableColumn<ModelTable, String> IDtableColumn;
+    private TableColumn<TableItem, String> IDtableColumn;
 
     @FXML
-    private TableColumn<ModelTable, String> FIOtableColumn;
+    private TableColumn<TableItem, String> FIOtableColumn;
 
     @FXML
-    private TableColumn<ModelTable, Double> BalancetableColumn;
+    private TableColumn<TableItem, Double> BalancetableColumn;
 
-    ObservableList<ModelTable> observableList = FXCollections.observableArrayList(new Callback<ModelTable, Observable[]>() {
+    ObservableList<TableItem> observableList = FXCollections.observableArrayList(new Callback<TableItem, Observable[]>() {
         @Override
-        public Observable[] call(ModelTable param) {
-            return new Observable[]{param.getStringPropertyId(),param.getStringPropertyFIO(),param.getStringPropertyBalance()};
+        public Observable[] call(TableItem param) {
+            return new Observable[]{param.getStringPropertyId(),param.getStringPropertyFIO(),param.getDoublePropertyBalance()};
         }
     });
 
