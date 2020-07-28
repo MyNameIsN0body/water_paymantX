@@ -1,4 +1,4 @@
-package model;
+package model.entity;
 
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleDoubleProperty;

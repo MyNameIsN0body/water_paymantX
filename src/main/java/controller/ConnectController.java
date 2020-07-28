@@ -5,10 +5,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import model.DBConnect;
+import model.dao.DBConnect;
 import model.DBConnectFactory;
-
-import java.io.File;
 
 public class ConnectController implements IController{
     @FXML

@@ -1,5 +1,7 @@
 package model;
 
+import model.dao.DBConnect;
+
 public class People {
 
     private int id;

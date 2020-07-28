@@ -1,5 +1,7 @@
 package model;
 
+import model.dao.DBConnect;
+
 import java.util.Properties;
 
 /**
