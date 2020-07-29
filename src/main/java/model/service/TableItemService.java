@@ -10,15 +10,23 @@ import java.sql.SQLException;
 public class TableItemService {
     Connection connection = (Connection) DBConnectFactory.getConnect();
 
-    public void addItem(TableItem tableItem) throws SQLException {
+    public TableItem addItem(TableItem tableItem) throws SQLException {
+        Integer currentID = tableItem.getId();
+        String currentFio = tableItem.getFio();
+        Double currentBalance = tableItem.getBalance();
         PreparedStatement statement= null;
+
+        TableItem newTableItem = new TableItem();
+        newTableItem.setUser_id(currentID);
+        newTableItem.setFio(currentFio);
+        newTableItem.setBalance(currentBalance);
 
         String sql = "INSERT INTO users_water (fio,balance) VALUES (?,?);";
 
         try{
             statement = connection.prepareStatement(sql);
-            statement.setString(1, tableItem.getFio());
-            statement.setDouble(2,tableItem.getBalance());
+            statement.setString(1, currentFio);
+            statement.setDouble(2,currentBalance);
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -30,10 +38,10 @@ public class TableItemService {
                 connection.close();
             }
         }
-
+        return newTableItem;
     }
 
-    public void removeItem(TableItem tableItem) throws SQLException {
+    public int removeItem(TableItem tableItem) throws SQLException {
         PreparedStatement statement= null;
 
         String sql = "DELETE FROM users_water WHERE user_id = ?;";
@@ -41,7 +49,7 @@ public class TableItemService {
         try{
             statement = connection.prepareStatement(sql);
             statement.setInt(1,tableItem.getId());
-            statement.executeUpdate();
+           return statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
@@ -52,6 +60,7 @@ public class TableItemService {
                 connection.close();
             }
         }
+        return 0;
     }
 
 
