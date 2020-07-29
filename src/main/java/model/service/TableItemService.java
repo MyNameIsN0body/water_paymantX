@@ -33,6 +33,27 @@ public class TableItemService {
 
     }
 
+    public void removeItem(TableItem tableItem) throws SQLException {
+        PreparedStatement statement= null;
+
+        String sql = "DELETE FROM users_water WHERE user_id = ?;";
+
+        try{
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,tableItem.getId());
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if(connection != null){
+                connection.close();
+            }
+        }
+    }
+
 
 //    public void insertPeople(String fullName, double balance) {
 //           String sql = "INSERT INTO users_water (fio,balance) " + "VALUES ('" + fullName + "'," + balance + ");";
