@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Jul 23 12:04:11 SAMT 2020
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1595491451622
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact org.openjfx\:javafx-fxml\:pom\:14 from/to central (https\://repo.maven.apache.org/maven2)\: Transfer failed for https\://repo.maven.apache.org/maven2/org/openjfx/javafx-fxml/14/javafx-fxml-14.pom

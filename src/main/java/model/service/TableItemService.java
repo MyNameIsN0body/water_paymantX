@@ -22,8 +22,8 @@ public class TableItemService {
 //        statement.executeUpdate();
         statement = connection.getPreparedStatement(sql);
         long id = connection.insertPerson(statement);
-        tableItem.setUserId(id);
-        return tableItem;
+        newtableItem.setUserId(id);
+        return newtableItem;
     }
 
     public int removeItem(TableItem tableItem) throws SQLException {
