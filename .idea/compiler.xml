@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="water_paymantX" />
+        <module name="my-test-class" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="my-test-class" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -133,10 +133,13 @@ public class TableController implements IController{
     }
     @FXML
     private void addPersonButtonAction() {
-//        People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
         String name = surnameTextField.getText() + " " + nameTextField.getText() + " " + middleNameTextField.getText();
         double balance = Double.parseDouble(balanceTextField.getText());
-//        people.insertPeople(name,balance);
+
+        TableItem newItem = new TableItem();
+        newItem.setFio(name);
+        newItem.setBalance(balance);
+        observableList.add(newItem);
 
         surnameTextField.clear();
         nameTextField.clear();

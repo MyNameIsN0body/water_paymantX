@@ -14,7 +14,7 @@ public class TableItem {
     private final SimpleDoubleProperty balance = new SimpleDoubleProperty();
 
 
-    public void setUser_id(final Integer id) {
+    public void setUserId(final Integer id) {
         this.id.set(id);
     }
 

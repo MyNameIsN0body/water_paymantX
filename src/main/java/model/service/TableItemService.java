@@ -1,14 +1,14 @@
 package model.service;
 
 import model.DBConnectFactory;
+import model.dao.DBConnect;
 import model.entity.TableItem;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class TableItemService {
-    Connection connection = (Connection) DBConnectFactory.getConnect();
+    DBConnect connection =  DBConnectFactory.getConnect();
 
     public TableItem addItem(TableItem tableItem) throws SQLException {
         Integer currentID = tableItem.getId();
@@ -17,27 +17,17 @@ public class TableItemService {
         PreparedStatement statement= null;
 
         TableItem newTableItem = new TableItem();
-        newTableItem.setUser_id(currentID);
+        newTableItem.setUserId(currentID);
         newTableItem.setFio(currentFio);
         newTableItem.setBalance(currentBalance);
 
         String sql = "INSERT INTO users_water (fio,balance) VALUES (?,?);";
 
-        try{
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, currentFio);
-            statement.setDouble(2,currentBalance);
-            statement.executeUpdate();
-        }catch (SQLException e){
-            e.printStackTrace();
-        } finally {
-            if(statement != null) {
-                statement.close();
-            }
-            if(connection != null){
-                connection.close();
-            }
-        }
+        connection.insertPerson(sql);
+        statement.setString(1, currentFio);
+        statement.setDouble(2,currentBalance);
+        statement.executeUpdate();
+
         return newTableItem;
     }
 
