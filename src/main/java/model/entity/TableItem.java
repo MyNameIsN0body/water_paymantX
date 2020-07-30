@@ -3,18 +3,19 @@ package model.entity;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.util.Objects;
 
 public class TableItem {
 
-    private final SimpleIntegerProperty id = new SimpleIntegerProperty();
+    private final SimpleLongProperty id = new SimpleLongProperty();
     private final SimpleStringProperty fio = new SimpleStringProperty();
     private final SimpleDoubleProperty balance = new SimpleDoubleProperty();
 
 
-    public void setUserId(final Integer id) {
+    public void setUserId(final Long id) {
         this.id.set(id);
     }
 
@@ -26,7 +27,7 @@ public class TableItem {
         this.balance.set(balance);
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id.getValue();
     }
 

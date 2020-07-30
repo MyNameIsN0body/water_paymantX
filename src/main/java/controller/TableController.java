@@ -16,9 +16,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.entity.TableItem;
+import model.service.TableItemService;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class TableController implements IController{
@@ -132,14 +134,21 @@ public class TableController implements IController{
 //        initialize(this.location,this.resources);
     }
     @FXML
-    private void addPersonButtonAction() {
+    private void addPersonButtonAction() throws SQLException {
         String name = surnameTextField.getText() + " " + nameTextField.getText() + " " + middleNameTextField.getText();
         double balance = Double.parseDouble(balanceTextField.getText());
 
         TableItem newItem = new TableItem();
         newItem.setFio(name);
         newItem.setBalance(balance);
-        observableList.add(newItem);
+
+        TableItemService service = new TableItemService();
+
+        try {
+            observableList.add(service.addItem(newItem));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         surnameTextField.clear();
         nameTextField.clear();

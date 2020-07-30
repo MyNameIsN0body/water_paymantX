@@ -10,25 +10,20 @@ import java.sql.SQLException;
 public class TableItemService {
     DBConnect connection =  DBConnectFactory.getConnect();
 
-    public TableItem addItem(TableItem tableItem) throws SQLException {
-        Integer currentID = tableItem.getId();
-        String currentFio = tableItem.getFio();
-        Double currentBalance = tableItem.getBalance();
+    public TableItem addItem(TableItem tableItem) throws SQLException, ClassNotFoundException {
+        TableItem newtableItem = tableItem;
+        String currentFio = newtableItem.getFio();
+        Double currentBalance = newtableItem.getBalance();
         PreparedStatement statement= null;
 
-        TableItem newTableItem = new TableItem();
-        newTableItem.setUserId(currentID);
-        newTableItem.setFio(currentFio);
-        newTableItem.setBalance(currentBalance);
-
         String sql = "INSERT INTO users_water (fio,balance) VALUES (?,?);";
-
-        connection.insertPerson(sql);
         statement.setString(1, currentFio);
         statement.setDouble(2,currentBalance);
-        statement.executeUpdate();
-
-        return newTableItem;
+//        statement.executeUpdate();
+        statement = connection.getPreparedStatement(sql);
+        long id = connection.insertPerson(statement);
+        tableItem.setUserId(id);
+        return tableItem;
     }
 
     public int removeItem(TableItem tableItem) throws SQLException {

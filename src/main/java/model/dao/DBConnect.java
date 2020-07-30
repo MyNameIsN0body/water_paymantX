@@ -1,8 +1,5 @@
 package model.dao;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Properties;
 
 public class DBConnect {
@@ -33,23 +30,39 @@ public class DBConnect {
             connection.setAutoCommit(false);
         return connection;
     }
-
-    public void insertPerson(String sql) {
-        Statement statement = null;
-        try {
-            Connection connection = openConnection();
-            statement = connection.createStatement();
-            System.out.println(sql);
-            statement.executeUpdate(sql);
-            statement.close();
-            connection.commit();
-            connection.close();
-
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+    public PreparedStatement getPreparedStatement(String sql) throws SQLException, ClassNotFoundException {
+        return openConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+    }
+    public long insertPerson(PreparedStatement statement) throws SQLException {
+        int affectRow = statement.executeUpdate();
+        if (affectRow ==0) {
+            throw  new SQLException("Insert statement failed");
+        }
+        ResultSet resultSet = statement.getGeneratedKeys();
+        if (resultSet!=null && resultSet.next()) {
+            //resultSet.next() требуется или нет надо проверить на реальной базе
+            return resultSet.getLong(1);
+        } else {
+            throw  new SQLException("Insert statement failed");
         }
     }
+//    public PreparedStatement insertPerson(String sql) {
+//        PreparedStatement statement = null;
+//        try {
+//            Connection connection = openConnection();
+//            statement = connection.prepareStatement(sql);
+//            System.out.println(sql);
+//            statement.executeUpdate(sql);
+//            statement.close();
+//            connection.commit();
+//            connection.close();
+//
+//        } catch (Exception e) {
+//            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+//            System.exit(0);
+//        }
+//        return statement;
+//    }
 
     public void deletePerson(String sql) {
         Statement statement = null;
