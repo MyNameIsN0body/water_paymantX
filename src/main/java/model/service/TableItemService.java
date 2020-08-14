@@ -26,26 +26,15 @@ public class TableItemService {
         return newtableItem;
     }
 
-    public int removeItem(TableItem tableItem) throws SQLException {
+    public int removeItem(int Item) throws SQLException, ClassNotFoundException {
+
         PreparedStatement statement= null;
 
         String sql = "DELETE FROM users_water WHERE user_id = ?;";
-
-        try{
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1,tableItem.getId());
-           return statement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
-            if(connection != null){
-                connection.close();
-            }
-        }
-        return 0;
+        statement.setLong(1,Item);
+        statement = connection.getPreparedStatement(sql);
+       int countDeleted = connection.deletePerson(statement);
+        return countDeleted;
     }
 
 

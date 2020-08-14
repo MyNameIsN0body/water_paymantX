@@ -33,9 +33,10 @@ public class DBConnect {
     public PreparedStatement getPreparedStatement(String sql) throws SQLException, ClassNotFoundException {
         return openConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
     }
+
     public long insertPerson(PreparedStatement statement) throws SQLException {
         int affectRow = statement.executeUpdate();
-        if (affectRow ==0) {
+        if (affectRow == 0) {
             throw  new SQLException("Insert statement failed");
         }
         ResultSet resultSet = statement.getGeneratedKeys();
@@ -46,40 +47,31 @@ public class DBConnect {
             throw  new SQLException("Insert statement failed");
         }
     }
-//    public PreparedStatement insertPerson(String sql) {
-//        PreparedStatement statement = null;
+
+    public int deletePerson(PreparedStatement statement) throws SQLException{
+        int affectRow = statement.executeUpdate();
+        if (affectRow == 0) {
+            throw  new SQLException("Delete statement failed");
+        }
+        return affectRow;
+    }
+
+//    public void deletePerson(String sql) {
+//        Statement statement = null;
 //        try {
 //            Connection connection = openConnection();
-//            statement = connection.prepareStatement(sql);
+//            statement = connection.createStatement();
 //            System.out.println(sql);
 //            statement.executeUpdate(sql);
-//            statement.close();
 //            connection.commit();
+//            statement.close();
 //            connection.close();
 //
 //        } catch (Exception e) {
 //            System.err.println(e.getClass().getName() + ": " + e.getMessage());
 //            System.exit(0);
 //        }
-//        return statement;
 //    }
-
-    public void deletePerson(String sql) {
-        Statement statement = null;
-        try {
-            Connection connection = openConnection();
-            statement = connection.createStatement();
-            System.out.println(sql);
-            statement.executeUpdate(sql);
-            connection.commit();
-            statement.close();
-            connection.close();
-
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-    }
     public void updatePerson(String sql) {
         Statement statement = null;
         try {

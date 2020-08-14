@@ -11,6 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="my-test-class" target="11" />
+      <module name="water_paymantX" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
