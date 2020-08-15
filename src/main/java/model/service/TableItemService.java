@@ -51,7 +51,7 @@ public class TableItemService {
 
         PreparedStatement statementSelect = null;
         String sqlSelect = "SELECT * FROM users_water WHERE user_id = ?;";
-        statementSelect = connection.getPreparedStatement(sql);
+        statementSelect = connection.getPreparedStatement(sqlSelect);
         statementSelect.setLong(1,ID);
 
         ResultSet resultSet= connection.selectPerson(statement);
