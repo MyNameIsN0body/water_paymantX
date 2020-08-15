@@ -37,7 +37,18 @@ public class TableItemService {
         return countDeleted;
     }
 
+    public TableItem updateItem(TableItem tableItem) throws SQLException, ClassNotFoundException {
+        PreparedStatement statement = null;
+        double balance = tableItem.getBalance();
+        long ID = tableItem.getId();
 
+        String sql = "UPDATE users_water SET  balance = balance + ? WHERE user_id = ?;";
+        statement = connection.getPreparedStatement(sql);
+        statement.setDouble(1,balance);
+        statement.setLong(2,ID);
+
+        return connection.updatePerson(statement);
+    }
 //    public void insertPeople(String fullName, double balance) {
 //           String sql = "INSERT INTO users_water (fio,balance) " + "VALUES ('" + fullName + "'," + balance + ");";
 //           dbConnect.insertPerson(sql);

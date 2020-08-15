@@ -1,4 +1,6 @@
 package model.dao;
+import model.entity.TableItem;
+
 import java.sql.*;
 import java.util.Properties;
 
@@ -55,36 +57,16 @@ public class DBConnect {
         }
         return affectRow;
     }
-
-//    public void deletePerson(String sql) {
-//        Statement statement = null;
-//        try {
-//            Connection connection = openConnection();
-//            statement = connection.createStatement();
-//            System.out.println(sql);
-//            statement.executeUpdate(sql);
-//            connection.commit();
-//            statement.close();
-//            connection.close();
-//
-//        } catch (Exception e) {
-//            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-//            System.exit(0);
-//        }
-//    }
-    public void updatePerson(String sql) {
-        Statement statement = null;
-        try {
-            Connection connection = openConnection();
-            statement = connection.createStatement();
-            statement.executeUpdate(sql);
-            connection.commit();
-
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+    public TableItem updatePerson(PreparedStatement statement) throws SQLException {
+        ResultSet resultSet = statement.executeQuery();
+        if(resultSet == null){
+            throw  new SQLException("Delete statement failed");
         }
+        TableItem updatedItem = new TableItem();
+        updatedItem.setUserId(resultSet.getLong("user_id"));
+        updatedItem.setFio(resultSet.getString("fio"));
+        updatedItem.setBalance(resultSet.getDouble("balance"));
+        return updatedItem;
     }
+
 }

@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 
 public class TableController implements IController{
 
-
     // TABLE VIEW
     @FXML
     private TableView<TableItem> allTableView;
@@ -155,7 +154,6 @@ public class TableController implements IController{
         middleNameTextField.clear();
         balanceTextField.clear();
 
-
 //        refreshTable();
 //        allTableView.getItems().clear();
 //        initialize(this.location,this.resources);
@@ -176,9 +174,7 @@ public class TableController implements IController{
         Scene scene = new Scene(rootLayout);
         newStage.setScene(scene);
         newStage.show();
-
     }
-
 
 //
 //    public void refreshTable() {
