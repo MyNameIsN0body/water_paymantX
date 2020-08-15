@@ -127,14 +127,11 @@ public class TableController implements IController{
     @FXML
     private void removePersonButtonAction() throws SQLException, ClassNotFoundException {
         TableItemService service = new TableItemService();
-        int deleteID = Integer.parseInt(removePersonTextField.getText());
-        observableList.remove(service.removeItem(deleteID));
-//        People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
-//        people.deletePeople(Integer.parseInt(removePersonTextField.getText()));
+        long deleteID = Long.parseLong(removePersonTextField.getText());
+        TableItem deleteItem = new TableItem();
+        deleteItem.setUserId(deleteID);
+        observableList.remove(service.removeItem(deleteItem));
         removePersonTextField.clear();
-//        refreshTable();
-//        allTableView.getItems().clear();
-//        initialize(this.location,this.resources);
     }
     @FXML
     private void addPersonButtonAction() throws SQLException {

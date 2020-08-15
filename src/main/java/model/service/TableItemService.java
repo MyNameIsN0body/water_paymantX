@@ -8,17 +8,17 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class TableItemService {
-    DBConnect connection =  DBConnectFactory.getConnect();
+    DBConnect connection = DBConnectFactory.getConnect();
 
     public TableItem addItem(TableItem tableItem) throws SQLException, ClassNotFoundException {
         TableItem newtableItem = tableItem;
         String currentFio = newtableItem.getFio();
         Double currentBalance = newtableItem.getBalance();
-        PreparedStatement statement= null;
+        PreparedStatement statement = null;
 
         String sql = "INSERT INTO users_water (fio,balance) VALUES (?,?);";
         statement.setString(1, currentFio);
-        statement.setDouble(2,currentBalance);
+        statement.setDouble(2, currentBalance);
 //        statement.executeUpdate();
         statement = connection.getPreparedStatement(sql);
         long id = connection.insertPerson(statement);
@@ -26,14 +26,14 @@ public class TableItemService {
         return newtableItem;
     }
 
-    public int removeItem(int Item) throws SQLException, ClassNotFoundException {
+    public int removeItem(TableItem tableItem) throws SQLException, ClassNotFoundException {
 
-        PreparedStatement statement= null;
-
+        PreparedStatement statement = null;
+        long item = tableItem.getId();
         String sql = "DELETE FROM users_water WHERE user_id = ?;";
-        statement.setLong(1,Item);
         statement = connection.getPreparedStatement(sql);
-       int countDeleted = connection.deletePerson(statement);
+        statement.setLong(1, item);
+        int countDeleted = connection.deletePerson(statement);
         return countDeleted;
     }
 
