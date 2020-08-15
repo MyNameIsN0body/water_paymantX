@@ -5,6 +5,7 @@ import model.dao.DBConnect;
 import model.entity.TableItem;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TableItemService {
@@ -46,8 +47,21 @@ public class TableItemService {
         statement = connection.getPreparedStatement(sql);
         statement.setDouble(1,balance);
         statement.setLong(2,ID);
+        connection.updatePerson(statement);
 
-        return connection.updatePerson(statement);
+        PreparedStatement statementSelect = null;
+        String sqlSelect = "SELECT * FROM users_water WHERE user_id = ?;";
+        statementSelect = connection.getPreparedStatement(sql);
+        statementSelect.setLong(1,ID);
+
+        ResultSet resultSet= connection.selectPerson(statement);
+        TableItem updatedItem = new TableItem();
+        if(resultSet != null) {
+            updatedItem.setUserId(resultSet.getLong("user_id"));
+            updatedItem.setFio(resultSet.getString("fio"));
+            updatedItem.setBalance(resultSet.getDouble("balance"));
+        }
+        return updatedItem;
     }
 //    public void insertPeople(String fullName, double balance) {
 //           String sql = "INSERT INTO users_water (fio,balance) " + "VALUES ('" + fullName + "'," + balance + ");";

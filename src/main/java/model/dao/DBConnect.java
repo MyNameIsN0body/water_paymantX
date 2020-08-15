@@ -57,16 +57,27 @@ public class DBConnect {
         }
         return affectRow;
     }
-    public TableItem updatePerson(PreparedStatement statement) throws SQLException {
-        ResultSet resultSet = statement.executeQuery();
-        if(resultSet == null){
-            throw  new SQLException("Delete statement failed");
+    public int updatePerson(PreparedStatement statement) throws SQLException{
+        int affectRow = statement.executeUpdate();
+        if (affectRow == 0) {
+            throw  new SQLException("Update statement failed");
         }
-        TableItem updatedItem = new TableItem();
-        updatedItem.setUserId(resultSet.getLong("user_id"));
-        updatedItem.setFio(resultSet.getString("fio"));
-        updatedItem.setBalance(resultSet.getDouble("balance"));
-        return updatedItem;
+        return affectRow;
     }
+    public ResultSet selectPerson(PreparedStatement statement) throws SQLException {
+        ResultSet resultSet = statement.executeQuery();
+        return resultSet;
+    }
+//    public TableItem updatePerson(PreparedStatement statement) throws SQLException {
+//        ResultSet resultSet = statement.executeQuery();
+//        if(resultSet == null){
+//            throw  new SQLException("Delete statement failed");
+//        }
+//        TableItem updatedItem = new TableItem();
+//        updatedItem.setUserId(resultSet.getLong("user_id"));
+//        updatedItem.setFio(resultSet.getString("fio"));
+//        updatedItem.setBalance(resultSet.getDouble("balance"));
+//        return updatedItem;
+//    }
 
 }
