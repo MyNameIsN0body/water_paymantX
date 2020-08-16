@@ -44,29 +44,6 @@ public class TableController implements IController{
             return new Observable[]{param.getStringPropertyId(),param.getStringPropertyFIO(),param.getDoublePropertyBalance()};
         }
     });
-
-/* пока комментируем, чтобы не менять
-    public void init() {
-
-        try {
-            Connection connection = DBConnect.openConnection();
-            ResultSet resultSet = connection.createStatement().executeQuery("select * from users_water");
-            while(resultSet.next()) {
-                observableList.add(new ModelTable(resultSet.getInt("user_id"),resultSet.getString("fio"),resultSet.getDouble("balance")));
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-// relativePath.setCellValueFactory(x->x.getValue().relativePathProperty()
-        IDtableColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        FIOtableColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
-        BalancetableColumn.setCellValueFactory(new PropertyValueFactory<>("balance"));
-        allTableView.setItems(observableList);
-    }
-    */
     //  View Controller
 
     @FXML

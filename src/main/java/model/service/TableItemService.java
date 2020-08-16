@@ -7,6 +7,8 @@ import model.entity.TableItem;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TableItemService {
     DBConnect connection = DBConnectFactory.getConnect();
@@ -54,7 +56,7 @@ public class TableItemService {
         statementSelect = connection.getPreparedStatement(sqlSelect);
         statementSelect.setLong(1,ID);
 
-        ResultSet resultSet= connection.selectPerson(statement);
+        ResultSet resultSet= connection.selectPerson(statementSelect);
         TableItem updatedItem = new TableItem();
         if(resultSet != null) {
             updatedItem.setUserId(resultSet.getLong("user_id"));
@@ -62,5 +64,21 @@ public class TableItemService {
             updatedItem.setBalance(resultSet.getDouble("balance"));
         }
         return updatedItem;
+    }
+    public List<TableItem> getAllItem() throws SQLException, ClassNotFoundException {
+        PreparedStatement statement = null;
+        List<TableItem> allItem = new ArrayList<>();
+
+        String sql = "SELECT * FROM users_water";
+        statement = connection.getPreparedStatement(sql);
+        ResultSet resultSet= connection.selectPerson(statement);
+        while (resultSet.next()) {
+            TableItem item = new TableItem();
+            item.setUserId(resultSet.getLong("user_id"));
+            item.setFio(resultSet.getString("fio"));
+            item.setBalance(resultSet.getDouble("balance"));
+            allItem.add(item);
+        }
+        return allItem;
     }
 }
