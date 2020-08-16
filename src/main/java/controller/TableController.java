@@ -24,7 +24,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class TableController implements IController{
-
+    private TableItemService service = new TableItemService();
     // TABLE VIEW
     @FXML
     private TableView<TableItem> allTableView;
@@ -125,7 +125,6 @@ public class TableController implements IController{
 
     @FXML
     private void removePersonButtonAction() throws SQLException, ClassNotFoundException {
-        TableItemService service = new TableItemService();
         long deleteID = Long.parseLong(removePersonTextField.getText());
         TableItem deleteItem = new TableItem();
         deleteItem.setUserId(deleteID);
@@ -140,9 +139,6 @@ public class TableController implements IController{
         TableItem newItem = new TableItem();
         newItem.setFio(name);
         newItem.setBalance(balance);
-
-        TableItemService service = new TableItemService();
-
         try {
             observableList.add(service.addItem(newItem));
         } catch (ClassNotFoundException e) {

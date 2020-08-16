@@ -1,5 +1,4 @@
 package model.dao;
-import model.entity.TableItem;
 
 import java.sql.*;
 import java.util.Properties;
@@ -68,16 +67,4 @@ public class DBConnect {
         ResultSet resultSet = statement.executeQuery();
         return resultSet;
     }
-//    public TableItem updatePerson(PreparedStatement statement) throws SQLException {
-//        ResultSet resultSet = statement.executeQuery();
-//        if(resultSet == null){
-//            throw  new SQLException("Delete statement failed");
-//        }
-//        TableItem updatedItem = new TableItem();
-//        updatedItem.setUserId(resultSet.getLong("user_id"));
-//        updatedItem.setFio(resultSet.getString("fio"));
-//        updatedItem.setBalance(resultSet.getDouble("balance"));
-//        return updatedItem;
-//    }
-
 }
