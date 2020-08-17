@@ -12,9 +12,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.converter.DoubleStringConverter;
 import model.entity.TableItem;
 import model.service.TableItemService;
 
@@ -67,6 +69,9 @@ public class TableController implements IController{
 //    @FXML
 //    private Button addPersonButton;
 
+    /**
+     * Давай вот это поле вообще уберем, мы не будем вводить id, мы будем выбирать пользователя мышкой в списке
+     */
     @FXML
     private TextField removePersonTextField;
 
@@ -94,9 +99,31 @@ public class TableController implements IController{
         }
         */
 // relativePath.setCellValueFactory(x->x.getValue().relativePathProperty()
+
         IDtableColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         FIOtableColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
         BalancetableColumn.setCellValueFactory(new PropertyValueFactory<>("balance"));
+        try {
+            // добавляем все элементы в observableList
+            observableList.setAll(service.getAllItem());
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Error " + e.getMessage());  // тут добавляется обработка ошибок
+        }
+        /*
+           Установка отрисовки ячеек, как обычных текстовых
+         */
+        IDtableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        FIOtableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        /*
+           Для данной ячейки нужен еще и конвертор в значение Double
+         */
+        BalancetableColumn.setCellFactory(col-> new TextFieldTableCell<>(new DoubleStringConverter()));
+        /*
+         * осталось дописать сюда:
+         * событие по двойному клику мышки
+         * перевод ячеек в readonly         *
+         */
+
         allTableView.setItems(observableList);
     }
 
