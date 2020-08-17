@@ -69,7 +69,7 @@ public class TableItemService {
         PreparedStatement statement = null;
         List<TableItem> allItem = new ArrayList<>();
 
-        String sql = "SELECT * FROM users_water";
+        String sql = "SELECT * FROM users_water ORDER BY balance;";
         statement = connection.getPreparedStatement(sql);
         ResultSet resultSet= connection.selectPerson(statement);
         while (resultSet.next()) {
