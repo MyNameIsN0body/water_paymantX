@@ -160,7 +160,7 @@ public class TableController implements IController{
     }
 
     public static String getFXMLPath() {
-        return "../voda_01.fxml";
+        return "../MainForm.fxml";
     }
 
     public void openNewStage(ActionEvent actionEvent) throws IOException {
@@ -168,7 +168,7 @@ public class TableController implements IController{
         newStage.setResizable(false);
         newStage.setTitle("График оплаты");
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("voda_02.fxml"));
+        loader.setLocation(Main.class.getResource("PaymentForm.fxml"));
         AnchorPane rootLayout = (AnchorPane) loader.load();
 
         Scene scene = new Scene(rootLayout);
