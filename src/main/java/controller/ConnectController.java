@@ -33,7 +33,7 @@ public class ConnectController implements IController{
     private UIFactory factory;
 
     public static String getFXMLPath() {
-        return "../voda_00.fxml";
+        return "../ConnectionForm.fxml";
     }
 
     /*
@@ -75,8 +75,12 @@ public class ConnectController implements IController{
     }
 
     private void goToMainForm() {
-        factory.getForm(UIFactory.PROPERTIES_FORM).setVisible(false);
-        factory.getForm(UIFactory.MAIN_FORM).setVisible(true);
+        try {
+            factory.getForm(UIForms.CONNECTION_FORM).setVisible(false);
+            factory.getForm(UIForms.MAIN_FORM).setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

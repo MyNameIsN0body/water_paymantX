@@ -43,7 +43,7 @@ public class PaymentController implements IController{
     private ObservableList<String> items = FXCollections.observableArrayList();
 
     public static String getFXMLPath() {
-        return "../voda_02.fxml";
+        return "../PaymentForm.fxml";
     }
 
 
@@ -82,7 +82,7 @@ public class PaymentController implements IController{
 ////    }
 ////
 ////    private void refreshTableScene1() {
-////        FXMLLoader loader = new FXMLLoader(Main.class.getResource("sample.voda_01.fxml"));
+////        FXMLLoader loader = new FXMLLoader(Main.class.getResource("sample.MainForm.fxml"));
 ////        TableController ctrl = (TableController)(loader.getController());
 ////        ctrl.refreshTable();
 ////    }

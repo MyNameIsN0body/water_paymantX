@@ -10,104 +10,119 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * Версия класса с ленивой загрузкой форм, используется в связи с тем, что нам требуется передача информации
+ * для инициализации форм. Можно сделать реализацию и другими способами.
+ * Класс сохраняет формы в Set или, если ее нет - загрузит новую форму, и сохранит ее в Set.
+ * Данная веросия класса не предназначена для многопоточной работы.
+ *
+ */
 public class UIFactory {
     private final ResourceBundle resourceBundle;
     protected Stage primaryStage;
-    protected static final String PROPERTIES_FORM = "propertiesForm";
-    protected static final String MAIN_FORM = "mainForm";
-    protected static final String PAYMENT_FORM = "paymentForm";
-    private Set<FXMLForm> formList = new HashSet<>();
+    private final Set<FXMLForm> formList = new HashSet<>();
 
     public UIFactory(ResourceBundle resourceBundle, Stage primaryStage) {
         this.resourceBundle = resourceBundle;
         this.primaryStage = primaryStage;
     }
 
-    private FXMLForm searchFXMLForm(String nameForm) {
-        for (FXMLForm form : formList) {
-            if (form.getNameForm().equals(nameForm)) {
-                return form;
-            }
-        }
-        return null;
-    }
+    /**
+     * Загружает новую форму если ее нет в Set или создает новую.
+     *
+     * @param form {@link UIForms}
+     * @return {@link FXMLForm}
+     * @exception IOException при ошибке загрузки
+     */
+    public FXMLForm getFXMLForm(UIForms form) throws IOException {
 
-    public Node getForm(String nameForm) {
-        FXMLForm fxmlForm = searchFXMLForm(nameForm);
-        if (fxmlForm != null) {
-            return fxmlForm.getNode();
-        }
-        return null;
-    }
-
-    public Object getController(String nameForm) {
-        FXMLForm fxmlForm = searchFXMLForm(nameForm);
-        if (fxmlForm != null) {
-            return fxmlForm.getController();
-        }
-        return null;
-    }
-
-    public void initUI() throws Exception {
-        //UIMain loading
-        FXMLForm rootForm = loadNode(TableController.getFXMLPath(), resourceBundle, MAIN_FORM);
-        primaryStage.setScene(new Scene((Parent) rootForm.getNode()));
-        TableController tableController = (TableController) rootForm.getController();
         /*
-         * сюда добавляем загрузку второй формы
+         * Ищем форму в хранилище
          */
-        FXMLForm paymentForm = loadNode(PaymentController.getFXMLPath(), resourceBundle, PAYMENT_FORM);
-        FXMLForm propertiesForm = loadNode(ConnectController.getFXMLPath(), resourceBundle, PROPERTIES_FORM);
-        propertiesForm.getNode().setVisible(true);
-        primaryStage.setScene(new Scene((Parent) propertiesForm.getNode()));
-        primaryStage.show();
-        tableController.init(this);
+        FXMLForm resultFXMLForm = formList.stream()
+                .filter(x->x.getUiForm().equals(form))
+                .findFirst()
+                .orElse(null);
+
+        return  resultFXMLForm != null ? resultFXMLForm: loadNode(form);
+    }
+
+
+    /**
+     * Получаем объект Node для выбраной формы
+     * @param form {@link UIForms}
+     * @return {@link Node}
+     * @exception IOException при ошибке загрузки
+     */
+    public Node getForm(UIForms form) throws IOException {
+        return getFXMLForm(form).getNode();
     }
 
     /**
-     * Загружает любую FXML формы
+     * Получаем объект Controller для выбраной формы
      *
-     * @param resourcePath   путь к форме
-     * @param resourceBundle ResourceBundle с локализацией формы
+     * @param form {@link UIForms}
+     * @return Controller
+     * @exception IOException при ошибке загрузки
+     */
+    public Object getController(UIForms form) throws IOException {
+        return getFXMLForm(form).getController();
+    }
+
+    /**
+     * Загружает любую FXML форму
+     *
+     * @param forms   {@link UIForms}
      * @return FXMLForm
      * @throws IOException
      */
-    private FXMLForm loadNode(String resourcePath, ResourceBundle resourceBundle, String nameForm) throws IOException {
-        URL xmlUrl = TableController.class.getResource(resourcePath);
+    private FXMLForm loadNode(UIForms forms) throws IOException {
+
+        URL xmlUrl = TableController.class.getResource(forms.getXmlPath());
         FXMLLoader loader = new FXMLLoader(xmlUrl, resourceBundle);
         Parent root = loader.load();
         root.setVisible(false);
-        FXMLForm form = new FXMLForm(root, loader.getController(), nameForm);
+        FXMLForm form = new FXMLForm(root, loader.getController(), forms);
 
         if (form.getController() instanceof IController) {
             ((IController) form.getController()).init(this);
         }
 
+        primaryStage.setScene(new Scene(root));
         formList.add(form);
         return form;
     }
 
+    /**
+     * Класс, из которого можно достать controller для любой формы
+     */
     private class FXMLForm {
         private final Node node;
         private final Object controller;
-        private final String nameForm;
+        private final UIForms uiForm;
 
-        public FXMLForm(final Node node, final Object controller, String nameForm) {
+        public FXMLForm(Node node, Object controller, UIForms uiForm) {
             this.node = node;
             this.controller = controller;
-            this.nameForm = nameForm;
+            this.uiForm = uiForm;
         }
 
         public Node getNode() {
             return node;
         }
 
-        public String getNameForm() {
-            return nameForm;
-        }
-
         public Object getController() {
             return controller;
         }
+
+        /**
+         * Возвращает значение Enum для формы, которое используется вместо имени
+         * @return {@link UIForms}
+         */
+        public UIForms getUiForm() {
+            return uiForm;
+        }
+
+
     }
 }

@@ -1,4 +1,5 @@
 import controller.UIFactory;
+import controller.UIForms;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,28 +12,32 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
-    private Stage primaryStage;
     private AnchorPane rootLayout;
     private ResourceBundle resourceBundle = ResourceBundle.getBundle("uiLocale", Locale.getDefault());
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("График оплаты");
-        this.primaryStage.setResizable(false);
+        primaryStage.setTitle("График оплаты");
+        primaryStage.setResizable(false);
 
 
-        // Parent root = FXMLLoader.load(getClass().getResource("voda_01.fxml"));
+        // Parent root = FXMLLoader.load(getClass().getResource("MainForm.fxml"));
         // primaryStage.setTitle("График оплаты");
         //  primaryStage.setResizable(false);
         // primaryStage.setScene(new Scene(root));
 
-        launchView();
+        launchView(primaryStage);
     }
-    private void launchView() {
+
+    /**
+     * Загружает интерфейс. Лучше использовать кокальные переменные, в случае последовательной работы с ними.
+     *
+     * @param primaryStage Stage
+     */
+    private void launchView(Stage primaryStage) {
 //        try{
 //            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(Main.class.getResource("voda_00.fxml"));
+//            loader.setLocation(Main.class.getResource("ConnectionForm.fxml"));
 //            rootLayout = (AnchorPane) loader.load();
 //
 //            Scene scene = new Scene(rootLayout);
@@ -43,7 +48,9 @@ public class Main extends Application {
 //        }
         UIFactory factory = new UIFactory(resourceBundle, primaryStage);
         try {
-           factory.initUI();
+           factory.getForm(UIForms.CONNECTION_FORM)
+                   .setVisible(true);
+            primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
