@@ -26,7 +26,8 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class TableController implements IController{
-    private TableItemService service = new TableItemService();
+
+
     // TABLE VIEW
     @FXML
     private TableView<TableItem> allTableView;
@@ -46,6 +47,29 @@ public class TableController implements IController{
             return new Observable[]{param.getStringPropertyId(),param.getStringPropertyFIO(),param.getDoublePropertyBalance()};
         }
     });
+
+/* пока комментируем, чтобы не менять
+    public void init() {
+
+        try {
+            Connection connection = DBConnect.openConnection();
+            ResultSet resultSet = connection.createStatement().executeQuery("select * from users_water");
+            while(resultSet.next()) {
+                observableList.add(new ModelTable(resultSet.getInt("user_id"),resultSet.getString("fio"),resultSet.getDouble("balance")));
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+// relativePath.setCellValueFactory(x->x.getValue().relativePathProperty()
+        IDtableColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        FIOtableColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
+        BalancetableColumn.setCellValueFactory(new PropertyValueFactory<>("balance"));
+        allTableView.setItems(observableList);
+    }
+    */
     //  View Controller
 
     @FXML
@@ -76,6 +100,7 @@ public class TableController implements IController{
     private TextField removePersonTextField;
 
     private UIFactory factory;
+    private TableItemService service;
 
 //    @FXML
 //    private Button removePersonButton;
@@ -128,12 +153,13 @@ public class TableController implements IController{
     }
 
     @FXML
-    private void removePersonButtonAction() throws SQLException, ClassNotFoundException {
-        long deleteID = Long.parseLong(removePersonTextField.getText());
-        TableItem deleteItem = new TableItem();
-        deleteItem.setUserId(deleteID);
-        observableList.remove(service.removeItem(deleteItem));
+    private void removePersonButtonAction(){
+//        People people = new People(new DBConnect().openConnection("postgres", "IpMan"));
+//        people.deletePeople(Integer.parseInt(removePersonTextField.getText()));
         removePersonTextField.clear();
+//        refreshTable();
+//        allTableView.getItems().clear();
+//        initialize(this.location,this.resources);
     }
     @FXML
     private void addPersonButtonAction() throws SQLException {
@@ -143,6 +169,9 @@ public class TableController implements IController{
         TableItem newItem = new TableItem();
         newItem.setFio(name);
         newItem.setBalance(balance);
+
+        TableItemService service = new TableItemService();
+
         try {
             observableList.add(service.addItem(newItem));
         } catch (ClassNotFoundException e) {
@@ -153,6 +182,7 @@ public class TableController implements IController{
         nameTextField.clear();
         middleNameTextField.clear();
         balanceTextField.clear();
+
 
 //        refreshTable();
 //        allTableView.getItems().clear();
@@ -174,7 +204,9 @@ public class TableController implements IController{
         Scene scene = new Scene(rootLayout);
         newStage.setScene(scene);
         newStage.show();
+
     }
+
 
 //
 //    public void refreshTable() {

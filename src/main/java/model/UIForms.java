@@ -1,4 +1,8 @@
-package controller;
+package model;
+
+import controller.ConnectController;
+import controller.PaymentController;
+import controller.TableController;
 
 /**
  * Класс содержащий все формы, чтобы нам не приходилось помнить, что за какую форму отвечает

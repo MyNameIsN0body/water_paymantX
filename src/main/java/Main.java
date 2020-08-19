@@ -1,13 +1,9 @@
 import controller.UIFactory;
-import controller.UIForms;
+import model.UIForms;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -30,7 +26,7 @@ public class Main extends Application {
     }
 
     /**
-     * Загружает интерфейс. Лучше использовать кокальные переменные, в случае последовательной работы с ними.
+     * Загружает интерфейс. Лучше использовать локальные переменные, в случае последовательной работы с ними.
      *
      * @param primaryStage Stage
      */
