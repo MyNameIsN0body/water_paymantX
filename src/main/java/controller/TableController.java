@@ -30,7 +30,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class TableController implements IController{
+public class TableController implements IController {
     private TableItemService service = new TableItemService();
     // TABLE VIEW
     @FXML
@@ -48,7 +48,7 @@ public class TableController implements IController{
     ObservableList<TableItem> observableList = FXCollections.observableArrayList(new Callback<TableItem, Observable[]>() {
         @Override
         public Observable[] call(TableItem param) {
-            return new Observable[]{param.getStringPropertyId(),param.getStringPropertyFIO(),param.getDoublePropertyBalance()};
+            return new Observable[]{param.getStringPropertyId(), param.getStringPropertyFIO(), param.getDoublePropertyBalance()};
         }
     });
     //  View Controller
@@ -82,8 +82,8 @@ public class TableController implements IController{
 
     private UIFactory factory;
 
-//    @FXML
-//    private Button removePersonButton;
+    @FXML
+    private Button removePersonButton;
 
     /*
      *  передаем контроллер, он нам понадобится. Пока комментируем весь код, которы связан см б/д, чтобы не менять
@@ -116,12 +116,12 @@ public class TableController implements IController{
         /*
            Установка отрисовки ячеек, как обычных текстовых
          */
-        IDtableColumn.setCellFactory(col-> new TextFieldTableCell<>(new LongStringConverter()));
+        IDtableColumn.setCellFactory(col -> new TextFieldTableCell<>(new LongStringConverter()));
         FIOtableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         /*
            Для данной ячейки нужен еще и конвертор в значение Double
          */
-        BalancetableColumn.setCellFactory(col-> new TextFieldTableCell<>(new DoubleStringConverter()));
+        BalancetableColumn.setCellFactory(col -> new TextFieldTableCell<>(new DoubleStringConverter()));
         /*
          * осталось дописать сюда:
          * событие по двойному клику мышки
@@ -143,6 +143,11 @@ public class TableController implements IController{
             public void handle(ActionEvent actionEvent) {
 
             }
+        });
+
+        removePersonButton.setOnAction(e -> {
+            TableItem selectedItem = allTableView.getSelectionModel().getSelectedItem();
+            allTableView.getItems().remove(selectedItem);
         });
     }
 
