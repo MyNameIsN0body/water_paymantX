@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -19,12 +20,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.LongStringConverter;
 import model.entity.TableItem;
 import model.service.TableItemService;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TableController implements IController{
@@ -34,7 +37,7 @@ public class TableController implements IController{
     private TableView<TableItem> allTableView;
 
     @FXML
-    private TableColumn<TableItem, String> IDtableColumn;
+    private TableColumn<TableItem, Long> IDtableColumn;
 
     @FXML
     private TableColumn<TableItem, String> FIOtableColumn;
@@ -68,8 +71,8 @@ public class TableController implements IController{
     @FXML
     private TextField balanceTextField;
 
-//    @FXML
-//    private Button addPersonButton;
+    @FXML
+    private Button addPersonButton;
 
     /**
      * Давай вот это поле вообще уберем, мы не будем вводить id, мы будем выбирать пользователя мышкой в списке
@@ -113,7 +116,7 @@ public class TableController implements IController{
         /*
            Установка отрисовки ячеек, как обычных текстовых
          */
-        IDtableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        IDtableColumn.setCellFactory(col-> new TextFieldTableCell<>(new LongStringConverter()));
         FIOtableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         /*
            Для данной ячейки нужен еще и конвертор в значение Double
@@ -134,6 +137,13 @@ public class TableController implements IController{
         });
 
         allTableView.setItems(observableList);
+
+        addPersonButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+            }
+        });
     }
 
     @FXML
@@ -144,29 +154,29 @@ public class TableController implements IController{
         observableList.remove(service.removeItem(deleteItem));
         removePersonTextField.clear();
     }
-    @FXML
-    private void addPersonButtonAction() throws SQLException {
-        String name = surnameTextField.getText() + " " + nameTextField.getText() + " " + middleNameTextField.getText();
-        double balance = Double.parseDouble(balanceTextField.getText());
-
-        TableItem newItem = new TableItem();
-        newItem.setFio(name);
-        newItem.setBalance(balance);
-        try {
-            observableList.add(service.addItem(newItem));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        surnameTextField.clear();
-        nameTextField.clear();
-        middleNameTextField.clear();
-        balanceTextField.clear();
-
-//        refreshTable();
-//        allTableView.getItems().clear();
-//        initialize(this.location,this.resources);
-    }
+//    @FXML
+//    private void addPersonButtonAction() throws SQLException {
+//        String name = surnameTextField.getText() + " " + nameTextField.getText() + " " + middleNameTextField.getText();
+//        double balance = Double.parseDouble(balanceTextField.getText());
+//
+//        TableItem newItem = new TableItem();
+//        newItem.setFio(name);
+//        newItem.setBalance(balance);
+//        try {
+//            observableList.add(service.addItem(newItem));
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        surnameTextField.clear();
+//        nameTextField.clear();
+//        middleNameTextField.clear();
+//        balanceTextField.clear();
+//
+////        refreshTable();
+////        allTableView.getItems().clear();
+////        initialize(this.location,this.resources);
+//    }
 
     public static String getFXMLPath() {
         return "../MainForm.fxml";

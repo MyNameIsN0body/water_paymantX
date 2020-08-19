@@ -56,7 +56,7 @@
                         <TextField fx:id="balanceTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
-                  <Button fx:id="addPersonButton" layoutX="104.0" layoutY="258.0" mnemonicParsing="false" onAction="#addPersonButtonAction" text="Добавить" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="180.0" />
+                  <Button fx:id="addPersonButton" layoutX="104.0" layoutY="258.0" mnemonicParsing="false"  text="Добавить" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="180.0" />
                   <Label layoutX="44.0" layoutY="22.0" text="Добавить сотрудника">
                      <font>
                         <Font size="18.0" />
