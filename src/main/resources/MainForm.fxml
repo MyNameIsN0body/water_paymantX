@@ -80,7 +80,7 @@
                         <TextField fx:id="removePersonTextField" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
-                  <Button fx:id="removePersonButton" layoutX="169.0" layoutY="356.0" mnemonicParsing="false" onAction="#removePersonButtonAction" text="Удалить" />
+                  <Button fx:id="removePersonButton" layoutX="169.0" layoutY="356.0" mnemonicParsing="false" text="Удалить" />
                   <Label layoutY="6.0" text="&lt;--" />
                </children>
             </AnchorPane>

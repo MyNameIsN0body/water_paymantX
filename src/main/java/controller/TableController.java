@@ -148,17 +148,29 @@ public class TableController implements IController {
         removePersonButton.setOnAction(e -> {
             TableItem selectedItem = allTableView.getSelectionModel().getSelectedItem();
             allTableView.getItems().remove(selectedItem);
+            try {
+                removePerson(selectedItem);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException classNotFoundException) {
+                classNotFoundException.printStackTrace();
+            }
         });
     }
-
-    @FXML
-    private void removePersonButtonAction() throws SQLException, ClassNotFoundException {
-        long deleteID = Long.parseLong(removePersonTextField.getText());
+    private void removePerson(TableItem selectedItem) throws SQLException, ClassNotFoundException {
+        long deleteID =selectedItem.getId();
         TableItem deleteItem = new TableItem();
         deleteItem.setUserId(deleteID);
         observableList.remove(service.removeItem(deleteItem));
-        removePersonTextField.clear();
     }
+//    @FXML
+//    private void removePersonButtonAction() throws SQLException, ClassNotFoundException {
+//        long deleteID = Long.parseLong(removePersonTextField.getText());
+//        TableItem deleteItem = new TableItem();
+//        deleteItem.setUserId(deleteID);
+//        observableList.remove(service.removeItem(deleteItem));
+//        removePersonTextField.clear();
+//    }
 //    @FXML
 //    private void addPersonButtonAction() throws SQLException {
 //        String name = surnameTextField.getText() + " " + nameTextField.getText() + " " + middleNameTextField.getText();
